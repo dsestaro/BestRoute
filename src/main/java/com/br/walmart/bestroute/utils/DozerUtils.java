@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.dto.PathDTO;
 import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
+import com.br.walmart.bestroute.objects.hibernate.Path;
 import com.br.walmart.bestroute.objects.interfaces.PathInterface;
 
 /**
@@ -25,7 +26,7 @@ public class DozerUtils {
 	 * 
 	 * @return			- DTO para a serialização
 	 */
-	public static CitiesMapDTO convert(CitiesMap map) {
+	public static CitiesMapDTO convert2DTO(CitiesMap map) {
 		Mapper mapper = new DozerBeanMapper();
 		
 		CitiesMapDTO mapDTO = new CitiesMapDTO();
@@ -39,4 +40,22 @@ public class DozerUtils {
 
 		return mapDTO;
 	}
-}
+	
+	public static CitiesMap convertFromDTO (CitiesMapDTO mapDTO) {
+		Mapper mapper = new DozerBeanMapper();
+		
+		CitiesMap map = new CitiesMap();
+		
+		//TODO substituir por uma implementação customizada de um mapper do dozer
+		map.setName(mapDTO.getName());
+		
+		for(PathInterface pathDTO : mapDTO.getPaths()) {
+			Path path = mapper.map(pathDTO, Path.class);
+			
+			path.setMap(map);
+			map.addPath(path);
+		}
+		
+		return map;
+	}
+ }

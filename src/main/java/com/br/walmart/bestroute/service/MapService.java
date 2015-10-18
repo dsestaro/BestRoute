@@ -31,7 +31,7 @@ public class MapService {
 
 		// Caso exista o mapa será buscado os caminhos
 		if (map != null) {
-			returnDTO = DozerUtils.convert(map);
+			returnDTO = DozerUtils.convert2DTO(map);
 		}
 
 		return returnDTO;
@@ -42,11 +42,13 @@ public class MapService {
 	 * 
 	 * @param map		- Mapa a ser salvo no banco de dados
 	 */
-	public void setMap(CitiesMap map) {
-//		 Session session = new HibernateUtils().getSession();
-//		 Transaction transaction = session.beginTransaction();
-//		
-//		 session.saveOrUpdate(map);
+	public void setMap(CitiesMapDTO mapDTO) {
+		CitiesMap map = DozerUtils.convertFromDTO(mapDTO);
+		
+		CitiesMapDAOImpl mapDAO = new CitiesMapDAOImpl();
+		
+		mapDAO.saveOrUpdate(map);
+		
 //		
 //		 for(Path path : map.getPaths()) {
 //		

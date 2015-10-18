@@ -41,5 +41,14 @@ public class CitiesMapDAOImpl implements CitiesMapDAO {
 		session.close();
 		return map;
 	}
+	
+	@Override
+	public void saveOrUpdate(CitiesMap map) {
+		Session session = hibernateUtils.getSession();
+		
+		session.beginTransaction();
+		
+		session.saveOrUpdate(map);
+	}
 }
 

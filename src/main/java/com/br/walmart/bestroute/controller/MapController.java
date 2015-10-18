@@ -38,7 +38,7 @@ public class MapController {
 	 * @param map		- Mapa a ser salvo no banco de dados
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/setMap")
-	public void setMap(@RequestParam(value = "map") CitiesMap map) {
-		// return mapService.setMap(map);
+	public void setMap(@RequestParam(value = "map") CitiesMapDTO map) {
+		mapService.setMap(map);
 	}
 }

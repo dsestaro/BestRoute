@@ -15,4 +15,10 @@ public interface CitiesMapDAO {
 	 */
 	public CitiesMap findMap(String name);
 	
+	/**
+	 * Salva ou atualiza o mapa no banco de dados
+	 * 
+	 * @param map		- Mapa a ser inserido no banco de dados
+	 */
+	public void saveOrUpdate(CitiesMap map);
 }
