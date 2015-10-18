@@ -2,6 +2,7 @@ package com.br.walmart.bestroute.controller;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,29 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
+import com.br.walmart.bestroute.service.MapService;
 
 @RestController
 @RequestMapping("/rest")
 public class MapController {
 
+	@Autowired
+	private MapService mapService;
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/getMap")
 	public @ResponseBody CitiesMapDTO getMap(@RequestParam(value = "name") String name) {
-
-		CitiesMapDAOImpl mapDAO = new CitiesMapDAOImpl();
-
-		// Tenta obter o mapa do banco de dados
-		CitiesMap map = mapDAO.findMap(name);
-
-		// DTO para a serialização do retorno;
-		CitiesMapDTO returnDTO = new CitiesMapDTO();
-
-		// Caso exista o mapa será buscado os caminhos
-		if (map != null) {
-			Mapper mapper = new DozerBeanMapper();
-			returnDTO = mapper.map(map, CitiesMapDTO.class);
-		}
-
-		return returnDTO;
+		return mapService.getMap(name);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/setMap")
