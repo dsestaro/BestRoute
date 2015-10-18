@@ -19,7 +19,7 @@
 
 		<!--create the database schema on startup if required -->
 		<property name="hbm2ddl.auto">update</property>
-	    <mapping class="com.br.walmart.bestroute.dto.CitiesMap"/>
-	    <mapping class="com.br.walmart.bestroute.dto.Path"/>      
+	    <mapping class="com.br.walmart.bestroute.objects.hibernate.CitiesMap"/>
+	    <mapping class="com.br.walmart.bestroute.objects.hibernate.Path"/>      
 	    </session-factory>    
 </hibernate-configuration>

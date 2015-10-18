@@ -1,16 +1,20 @@
 package com.br.walmart.bestroute.utils;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class HibernateUtils {
-	private static final SessionFactory sessionFactory;
+	private final SessionFactory sessionFactory;
 	
-	static {
-		sessionFactory = new Configuration().configure().buildSessionFactory();
+	@Autowired
+	public HibernateUtils(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
+	public Session getSession() {
+		return sessionFactory.openSession();
 	}
 }
