@@ -25,6 +25,11 @@ Com os mapas carregados o requisitante irá procurar o menor valor de entrega e 
 - [Spring Boot]
 - [Spring IO]
 - [HSQLDB]
+- [JUnit]
+- [Log4J]
+- [REST Assured]
+- [Mockito]
+- [Dozer]
  
 #### Serviços REST ####
 ##### GET /rest/getMap #####
@@ -64,3 +69,8 @@ public class Path {
 [Spring Boot]: <http://projects.spring.io/spring-boot/>
 [Spring IO]: <http://platform.spring.io/platform/>  
 [HSQLDB]: <http://hsqldb.org/>
+[JUnit]: <http://junit.org/>
+[Log4J]: <http://logging.apache.org/log4j/2.x/>
+[REST Assured]: <http://code.google.com/p/rest-assured/>
+[Mockito]: <http://mockito.org/>
+[Dozer]: <http://dozer.sourceforge.net/>
