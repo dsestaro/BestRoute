@@ -1,9 +1,5 @@
 package com.br.walmart.bestroute.service;
 
-import java.util.List;
-
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +7,19 @@ import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
 import com.br.walmart.bestroute.objects.hibernate.Path;
+import com.br.walmart.bestroute.utils.DozerUtils;
 
 @Service
 public class MapService {
 	
-	
+	/**
+	 * Retorna o mapa gravado no banco de dados correspondente a String passada como parâmetro. 
+	 *  
+	 * 
+	 * @param name		- Nome do mapa a ser obtido
+	 * 
+	 * @return			- Objeto do tipo CitiesMapDTO preenchido com as informações recuperadas em banco
+	 */
 	public CitiesMapDTO getMap(String name) {
 		CitiesMapDAOImpl mapDAO = new CitiesMapDAOImpl();
 
@@ -27,35 +31,33 @@ public class MapService {
 
 		// Caso exista o mapa será buscado os caminhos
 		if (map != null) {
-			Mapper mapper = new DozerBeanMapper();
-			returnDTO = mapper.map(map, CitiesMapDTO.class);
+			returnDTO = DozerUtils.convert(map);
 		}
 
 		return returnDTO;
 	}
 	
-	
-	//Mover para a PathsDAO
-	public static Path getDatabasePath(Session session, Path path) {
-		String sql = "SELECT * FROM PATH WHERE " +
-				 		"START = '" + path.getStart() + "1' AND " +
-				 		"END = '" + path.getEnd() + "' AND " +
-				 		"MAP_NAME = '" + path.getMap().getName() + "'";
-		
-		List<Path> paths = session.createSQLQuery(sql).addEntity(Path.class).list();
-		
-		if(!paths.isEmpty()) {
-			//Pela regra de negócio estabelecida so pode existir um unico caminho entre o ponto
-			//inicial e o final para o mapa pesquisado.
-			Path pathReturn = paths.get(0);
-			
-			//Atualiza a distancia com a nova distancia informada
-			pathReturn.setDistance(path.getDistance());
-			
-			return pathReturn;
-		}
-		
-		return path;
+	/**
+	 * Salva o mapa passado como parâmetro no banco de dados.
+	 * 
+	 * @param map		- Mapa a ser salvo no banco de dados
+	 */
+	public void setMap(CitiesMap map) {
+//		 Session session = new HibernateUtils().getSession();
+//		 Transaction transaction = session.beginTransaction();
+//		
+//		 session.saveOrUpdate(map);
+//		
+//		 for(Path path : map.getPaths()) {
+//		
+//		 //Para a geração automatica de chave estrangeira do Hibernate
+//		 path.setMap(map);
+//		
+//		 MapService.getDatabasePath(session, path);
+//		
+//		 session.saveOrUpdate(path);
+//		 }
+//		
+//		 session.close();
 	}
-	
 }

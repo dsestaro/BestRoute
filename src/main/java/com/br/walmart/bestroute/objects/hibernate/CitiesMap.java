@@ -10,7 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.br.walmart.bestroute.objects.interfaces.CitiesMapInterface;
+import com.br.walmart.bestroute.objects.interfaces.PathInterface;
 
+/**
+ * Classe com anotações com o hibernate para realizar as operações com o banco de dados
+ * 
+ * @author davidson.sestaro
+ *
+ */
 @Entity
 public class CitiesMap implements CitiesMapInterface {
 	@Id
@@ -18,15 +25,16 @@ public class CitiesMap implements CitiesMapInterface {
 	private String name;
 	
 	@OneToMany(mappedBy = "map", targetEntity = Path.class, fetch=FetchType.LAZY)
-	private List<Path> paths;
-	
+	private List<PathInterface> paths;
+
 	public CitiesMap () {
-		this.paths = new ArrayList<Path>();
+		//Instancia para evitar nullpointer no metodo addPath();
+		this.paths = new ArrayList<PathInterface>();
 	}
 	
 	public CitiesMap(String name) {
 		this.name = name;
-		this.paths = new ArrayList<Path>();
+		this.paths = new ArrayList<PathInterface>();
 	}
 	
 	@Override
@@ -40,17 +48,17 @@ public class CitiesMap implements CitiesMapInterface {
 	}
 
 	@Override
-	public List<Path> getPaths() {
+	public List<PathInterface> getPaths() {
 		return paths;
 	}
 
 	@Override
-	public void setPaths(List<Path> paths) {
+	public void setPaths(List<PathInterface> paths) {
 		this.paths = paths;
 	}
 	
 	@Override
-	public void addPath(Path path) {
+	public void addPath(PathInterface path) {
 		this.paths.add(path);
 	}
 }

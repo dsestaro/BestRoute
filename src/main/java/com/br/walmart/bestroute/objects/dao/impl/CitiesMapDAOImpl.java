@@ -9,6 +9,11 @@ import com.br.walmart.bestroute.objects.dao.interfaces.CitiesMapDAO;
 import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
 import com.br.walmart.bestroute.utils.HibernateUtils;
 
+/**
+ * Implementação da classe de acesso ao banco de dados
+ * 
+ * @author davidson.sestaro
+ */
 @Service
 @Configurable
 public class CitiesMapDAOImpl implements CitiesMapDAO {
@@ -24,6 +29,7 @@ public class CitiesMapDAOImpl implements CitiesMapDAO {
 		
 	}
 	
+	@Override
 	public CitiesMap findMap(String name) {
 		Session session = hibernateUtils.getSession();
 		
