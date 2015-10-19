@@ -32,6 +32,9 @@ Com os mapas carregados o requisitante irá procurar o menor valor de entrega e 
 - [Dozer]
 - [Gson]
  
+#### Algoritmo de Menor Caminho ####
+- [Dijkstra] 
+ 
 #### Serviços REST ####
 ##### GET /rest/getMap #####
 Serviço que retorna o mapa solicitado populado, com todas as suas, rotas dados o identificador (nome). 
@@ -76,3 +79,4 @@ public class Path {
 [Mockito]: <http://mockito.org/>
 [Dozer]: <http://dozer.sourceforge.net/>
 [Gson]: <https://github.com/google/gson>
+[Dijkstra]: <http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html>
