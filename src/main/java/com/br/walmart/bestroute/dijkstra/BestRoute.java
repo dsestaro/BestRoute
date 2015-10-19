@@ -9,6 +9,7 @@ import com.br.walmart.bestroute.dijkstra.core.Dijkstra;
 import com.br.walmart.bestroute.dijkstra.objects.Edge;
 import com.br.walmart.bestroute.dijkstra.objects.Graph;
 import com.br.walmart.bestroute.dijkstra.objects.Vertex;
+import com.br.walmart.bestroute.exception.PathNotFoundException;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.interfaces.PathInterface;
 
@@ -30,8 +31,9 @@ public class BestRoute {
 	 * @param map		- Mapa no qual será procurado o menor caminho
 	 * @param start		- Ponto de inicio
 	 * @param end		- Destino final
+	 * @throws PathNotFoundException 
 	 */
-	public LinkedList<Vertex> execute(CitiesMapDTO map, String start, String end) {
+	public LinkedList<Vertex> execute(CitiesMapDTO map, String start, String end) throws PathNotFoundException {
 
 		//Mapa para a conversao de entidades para grafos
 		Map<String, Vertex> nodesMap = new HashMap<String, Vertex>();
@@ -64,6 +66,10 @@ public class BestRoute {
 		//Obtem a distancia do ponto de inicio ao ponto final e o caminho realizado
 		LinkedList<Vertex> path = dijkstra.getPath(nodesMap.get(end));
 
+		if(path == null) {
+			throw new PathNotFoundException("Não existem caminhos entre os pontos " + start + " e " + end + ".");
+		}
+		
 		return path;
 	}
 
