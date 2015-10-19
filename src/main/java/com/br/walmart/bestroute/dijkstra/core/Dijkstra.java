@@ -19,7 +19,7 @@ public class Dijkstra {
 	private Set<Vertex> settledNodes;
 	private Set<Vertex> unSettledNodes;
 	private Map<Vertex, Vertex> predecessors;
-	private Map<Vertex, Integer> distance;
+	private Map<Vertex, Double> distance;
 
 	public Dijkstra(Graph graph) {
 		// create a copy of the array so that we can operate on this array
@@ -29,9 +29,9 @@ public class Dijkstra {
 	public void execute(Vertex source) {
 		settledNodes = new HashSet<Vertex>();
 		unSettledNodes = new HashSet<Vertex>();
-		distance = new HashMap<Vertex, Integer>();
+		distance = new HashMap<Vertex, Double>();
 		predecessors = new HashMap<Vertex, Vertex>();
-		distance.put(source, 0);
+		distance.put(source, 0.0);
 		unSettledNodes.add(source);
 		while (unSettledNodes.size() > 0) {
 			Vertex node = getMinimum(unSettledNodes);
@@ -53,7 +53,7 @@ public class Dijkstra {
 
 	}
 
-	private int getDistance(Vertex node, Vertex target) {
+	private double getDistance(Vertex node, Vertex target) {
 		for (Edge edge : edges) {
 			if (edge.getSource().equals(node) && edge.getDestination().equals(target)) {
 				return edge.getWeight();
@@ -90,10 +90,10 @@ public class Dijkstra {
 		return settledNodes.contains(vertex);
 	}
 
-	private int getShortestDistance(Vertex destination) {
-		Integer d = distance.get(destination);
+	private double getShortestDistance(Vertex destination) {
+		Double d = distance.get(destination);
 		if (d == null) {
-			return Integer.MAX_VALUE;
+			return Double.MAX_VALUE;
 		} else {
 			return d;
 		}
@@ -106,17 +106,27 @@ public class Dijkstra {
 	public LinkedList<Vertex> getPath(Vertex target) {
 		LinkedList<Vertex> path = new LinkedList<Vertex>();
 		Vertex step = target;
+		
+		target.setDistancia(0);
+		
 		// check if a path exists
 		if (predecessors.get(step) == null) {
 			return null;
 		}
+		
 		path.add(step);
+		
 		while (predecessors.get(step) != null) {
 			step = predecessors.get(step);
 			path.add(step);
 		}
 		// Put it into the correct order
 		Collections.reverse(path);
+		
+		for(Vertex vertex : path) {
+			vertex.setDistancia(this.distance.get(vertex));
+		}
+		
 		return path;
 	}
 }

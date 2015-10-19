@@ -13,6 +13,16 @@ public class PathDTO implements PathInterface{
 	private String end;
 	private double distance;
 	
+	public PathDTO(String start, String end, double distance) {
+		this.start = start;
+		this.end = end;
+		this.distance = distance;
+	}
+	
+	public PathDTO() {
+
+	}
+
 	@Override
 	public String getStart() {
 		return this.start;

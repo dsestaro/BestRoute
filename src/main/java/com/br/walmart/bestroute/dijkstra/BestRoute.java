@@ -1,8 +1,5 @@
 package com.br.walmart.bestroute.dijkstra;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,13 +39,14 @@ public class BestRoute {
 		}
 
 		Graph graph = new Graph(nodes, edges);
+		
 		Dijkstra dijkstra = new Dijkstra(graph);
 		dijkstra.execute(nodesMap.get(start));
 		
 		LinkedList<Vertex> path = dijkstra.getPath(nodesMap.get(end));
 
 		for (Vertex vertex : path) {
-			System.out.println(vertex);
+			System.out.println(vertex.getDistancia());
 		}
 	}
 

@@ -3,6 +3,7 @@ package com.br.walmart.bestroute.dijkstra.objects;
 public class Vertex {
 	final private String id;
 	final private String name;
+	private double distancia;
 
 	public Vertex(String id, String name) {
 		this.id = id;
@@ -15,6 +16,14 @@ public class Vertex {
 
 	public String getName() {
 		return name;
+	}
+	
+	public double getDistancia() {
+		return distancia;
+	}
+
+	public void setDistancia(double distancia) {
+		this.distancia = distancia;
 	}
 
 	@Override
