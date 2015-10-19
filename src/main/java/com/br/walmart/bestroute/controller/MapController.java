@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.walmart.bestroute.exception.MapNotFoundException;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.interfaces.PathInterface;
 import com.br.walmart.bestroute.service.MapService;
@@ -73,7 +74,7 @@ public class MapController {
 	@RequestMapping(method = RequestMethod.GET, value = "/bestRoute")
 	public @ResponseBody CitiesMapDTO bestRoute(@RequestParam(value = "name") String name,
 			@RequestParam(value = "start") String start, @RequestParam(value = "end") String end,
-			@RequestParam(value = "autonomy") String autonomy, @RequestParam(value = "price") String price) {
+			@RequestParam(value = "autonomy") String autonomy, @RequestParam(value = "price") String price) throws MapNotFoundException {
 
 		if (name == null || name.isEmpty() || start == null || start.isEmpty() || end == null || end.isEmpty()
 				|| autonomy == null || autonomy.isEmpty() || price == null || price.isEmpty()) {

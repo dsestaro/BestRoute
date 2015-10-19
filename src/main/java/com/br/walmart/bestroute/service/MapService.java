@@ -2,6 +2,7 @@ package com.br.walmart.bestroute.service;
 
 import org.springframework.stereotype.Service;
 
+import com.br.walmart.bestroute.exception.MapNotFoundException;
 import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
 import com.br.walmart.bestroute.objects.dao.impl.PathDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
@@ -28,10 +29,10 @@ public class MapService {
 		CitiesMap map = mapDAO.findMap(name);
 
 		// DTO para a serialização do retorno;
-		CitiesMapDTO returnDTO = new CitiesMapDTO();
+		CitiesMapDTO returnDTO = null;
 
 		// Caso exista o mapa será buscado os caminhos
-		if (map != null) {
+		if (map != null) {			
 			returnDTO = DozerUtils.convert2DTO(map);
 		}
 
@@ -58,8 +59,14 @@ public class MapService {
 		}
 	}
 
-	public CitiesMapDTO calcBestRoute(String name, String start, String end, String autonomy, String price) {
-		// TODO Auto-generated method stub
+	public CitiesMapDTO calcBestRoute(String name, String start, String end, String autonomy, String price) throws MapNotFoundException {
+		
+		CitiesMapDTO map = getMap(name);
+		
+		if(map == null) {
+			throw new MapNotFoundException("Mapa não existe na base de dados");
+		}
+		
 		return null;
 	}
 }
