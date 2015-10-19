@@ -66,7 +66,25 @@ public class Path {
 ###### Exemplo de chamada: 
 
 ```sh
-/rest/setMap?name=SP
+/rest/setMap?map={"name":"SP","paths":[{"start":"A","end":"B","distance":10.0},{"start":"B","end":"D","distance":15.0},{"start":"A","end":"C","distance":20.0},{"start":"C","end":"D","distance":30.0},{"start":"B","end":"E","distance":50.0},{"start":"D","end":"E","distance":30.0}]}
+```
+
+##### GET /rest/bestRoute #####
+Serviço que retorna o menor caminho encontrado no mapa e o custo desse caminho para o caminhão especificado. 
+###### name: ######
+Nome do mapa a ser calculado.
+###### start: ######
+Nome da cidade de origem.
+###### end: ######
+Nome da cidade de destino.
+###### autonomy: ######
+Quantidade de KM/L que o caminhão possui.
+###### price: ######
+Custo de 1L de gasolina
+
+###### Exemplo de chamada: ######
+```sh
+/rest/bestRoute?name=SP&start=A&end=D&autonomy=10&price=2.5
 ```
 
 [Hibernate]: <http://hibernate.org/>
