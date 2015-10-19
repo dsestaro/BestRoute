@@ -63,11 +63,13 @@ public class PathDAOImpl implements PathDAO {
 	@Override
 	public void saveOrUpdate(Path path) {
 		Session session = hibernateUtils.getSession();
-		
+
+		//TODO remover para annotation
 		Transaction transaction = session.beginTransaction();
 		
 		session.saveOrUpdate(path);
 		
+		//TODO remover para annotation
 		transaction.commit();
 		session.flush();
 		
