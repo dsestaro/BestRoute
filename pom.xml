@@ -5,7 +5,7 @@
 
 	<groupId>com.br.walmart.bestroute</groupId>
 	<artifactId>BestRoute</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>Best Route</name>
