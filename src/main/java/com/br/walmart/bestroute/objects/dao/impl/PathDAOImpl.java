@@ -36,7 +36,7 @@ public class PathDAOImpl implements PathDAO {
 	public Path getDatabasePath(Path path) {
 		Session session = hibernateUtils.getSession();
 		
-		String sql = "SELECT * FROM PATH WHERE " + "START = '" + path.getStart() + "1' AND " + "END = '"
+		String sql = "SELECT * FROM PATH WHERE " + "START = '" + path.getStart() + "' AND " + "END = '"
 				+ path.getEnd() + "' AND " + "MAP_NAME = '" + path.getMap().getName() + "'";
 
 		List<Path> paths = session.createSQLQuery(sql).addEntity(Path.class).list();
@@ -54,6 +54,7 @@ public class PathDAOImpl implements PathDAO {
 			
 			return pathReturn;
 		}
+		session.flush();
 		
 		session.close();
 
@@ -64,9 +65,12 @@ public class PathDAOImpl implements PathDAO {
 	public void saveOrUpdate(Path path) {
 		Session session = hibernateUtils.getSession();
 		
-		session.beginTransaction();
+		Transaction transaction = session.beginTransaction();
 		
 		session.saveOrUpdate(path);
+		
+		transaction.commit();
+		session.flush();
 		
 		session.close();
 	}

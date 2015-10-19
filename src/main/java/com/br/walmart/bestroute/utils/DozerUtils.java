@@ -34,7 +34,9 @@ public class DozerUtils {
 		//TODO substituir por uma implementação customizada de um mapper do dozer
 		mapDTO.setName(map.getName());
 		
-		for(PathInterface path : map.getPaths()) {
+		for(int i = 0; i < map.getPaths().size(); i++) {
+			Path path = (Path) map.getPaths().get(i);
+			
 			mapDTO.addPath(mapper.map(path, PathDTO.class));
 		}
 

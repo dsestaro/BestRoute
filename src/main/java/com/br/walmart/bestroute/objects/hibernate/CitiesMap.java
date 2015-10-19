@@ -24,7 +24,7 @@ public class CitiesMap implements CitiesMapInterface {
 	@Column(name="name")
 	private String name;
 	
-	@OneToMany(mappedBy = "map", targetEntity = Path.class, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "map", targetEntity = Path.class, fetch=FetchType.EAGER)
 	private List<PathInterface> paths;
 
 	public CitiesMap () {

@@ -1,6 +1,7 @@
 package com.br.walmart.bestroute.objects.dao.impl;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
@@ -33,11 +34,14 @@ public class CitiesMapDAOImpl implements CitiesMapDAO {
 	public CitiesMap findMap(String name) {
 		Session session = hibernateUtils.getSession();
 		
-		session.beginTransaction();
+		Transaction transaction = session.beginTransaction();
 
 		//Tenta obter o mapa do banco de dados
 		CitiesMap map = (CitiesMap) session.get(CitiesMap.class, name);
 		
+		transaction.commit();
+		
+		session.flush();
 		session.close();
 		return map;
 	}
@@ -46,10 +50,13 @@ public class CitiesMapDAOImpl implements CitiesMapDAO {
 	public void saveOrUpdate(CitiesMap map) {
 		Session session = hibernateUtils.getSession();
 		
-		session.beginTransaction();
+		Transaction transaction = session.beginTransaction();
 		
 		session.saveOrUpdate(map);
 		
+		transaction.commit();
+		
+		session.flush();
 		session.close();
 	}
 }

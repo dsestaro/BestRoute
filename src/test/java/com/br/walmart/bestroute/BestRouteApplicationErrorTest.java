@@ -21,12 +21,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.br.walmart.bestroute.dijkstra.BestRoute;
+import com.br.walmart.bestroute.exception.MapNotFoundException;
 import com.br.walmart.bestroute.exception.PathNotFoundException;
 import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.dto.PathDTO;
 import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
 import com.br.walmart.bestroute.objects.hibernate.Path;
+import com.br.walmart.bestroute.service.MapService;
 import com.br.walmart.bestroute.start.BestRouteApplication;
 import com.br.walmart.bestroute.utils.HibernateUtils;
 import com.jayway.restassured.RestAssured;
@@ -103,20 +105,9 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test(expected=PathNotFoundException.class)
-	public void dijkstraTest () throws PathNotFoundException {
-		CitiesMapDTO map = new CitiesMapDTO();
+	public void dijkstraTest () throws PathNotFoundException, MapNotFoundException {
+		MapService service = new MapService();
 		
-		map.setName("SP");
-		
-		map.addPath(new PathDTO("A", "B", 10));
-		map.addPath(new PathDTO("B", "D", 15));
-		map.addPath(new PathDTO("A", "C", 20));
-		map.addPath(new PathDTO("C", "D", 30));
-		map.addPath(new PathDTO("B", "E", 50));
-		map.addPath(new PathDTO("D", "E", 30));
-		
-		BestRoute bestRoute = new BestRoute();
-		
-		bestRoute.execute(map, "A", "AAA");
+		service.calcBestRoute("SP", "A","D", "10", "2.50");
 	}
 }
