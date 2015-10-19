@@ -90,6 +90,8 @@ Custo de 1L de gasolina
 
 #### Como executar o projeto ####
 
+##### Para a execução e compilação do projeto é necessário o framework Maven instalado. #####
+
 para realizar a execução do projeto deve-se executar os seguintes comandos na ordem aprensetada:
 
 Para compilar o projeto e rodar os testes
