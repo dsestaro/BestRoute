@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.br.walmart.bestroute.dijkstra.BestRoute;
+import com.br.walmart.bestroute.exception.PathNotFoundException;
 import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.dto.PathDTO;
@@ -93,7 +94,7 @@ public class BestRouteApplicationTests {
 	}
 	
 	@Test
-	public void dijkstraTest () {
+	public void dijkstraTest () throws PathNotFoundException {
 		CitiesMapDTO map = new CitiesMapDTO();
 		
 		map.setName("SP");

@@ -50,6 +50,8 @@ public class BestRoute {
 				setNode(nodesMap, path.getEnd());
 			}
 		}
+		
+		validatePath(start, end, nodesMap);
 
 		//Adiciona as arestas ao grafo
 		int quant = 0;
@@ -71,6 +73,24 @@ public class BestRoute {
 		}
 		
 		return path;
+	}
+
+	/**
+	 * Metodo para validar se o vertice de inicio e de final existem no mapa.
+	 * 
+	 * @param start			- Vertice de origem
+	 * @param end			- Vertice de destino
+	 * @param nodesMap		- Mapa com os vertices
+	 * @throws PathNotFoundException 
+	 */
+	private void validatePath(String start, String end, Map<String, Vertex> nodesMap) throws PathNotFoundException {
+		if(!nodesMap.containsKey(start)) {
+			throw new PathNotFoundException("Não existem caminhos entre os pontos " + start + " e " + end + ".");
+		}
+		
+		if(!nodesMap.containsKey(end)) {
+			throw new PathNotFoundException("Não existem caminhos entre os pontos " + start + " e " + end + ".");
+		}
 	}
 
 	/**

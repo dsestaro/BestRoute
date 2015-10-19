@@ -20,6 +20,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.br.walmart.bestroute.dijkstra.BestRoute;
+import com.br.walmart.bestroute.exception.PathNotFoundException;
 import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.dto.PathDTO;
@@ -98,5 +100,23 @@ public class BestRouteApplicationErrorTest {
 			body("message", equalTo("É necessário informar todos os parâmetros.")).
 		when().
 			get("/rest/bestRoute");
+	}
+	
+	@Test(expected=PathNotFoundException.class)
+	public void dijkstraTest () throws PathNotFoundException {
+		CitiesMapDTO map = new CitiesMapDTO();
+		
+		map.setName("SP");
+		
+		map.addPath(new PathDTO("A", "B", 10));
+		map.addPath(new PathDTO("B", "D", 15));
+		map.addPath(new PathDTO("A", "C", 20));
+		map.addPath(new PathDTO("C", "D", 30));
+		map.addPath(new PathDTO("B", "E", 50));
+		map.addPath(new PathDTO("D", "E", 30));
+		
+		BestRoute bestRoute = new BestRoute();
+		
+		bestRoute.execute(map, "A", "AAA");
 	}
 }
