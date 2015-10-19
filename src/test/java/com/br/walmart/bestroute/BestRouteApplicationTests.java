@@ -18,6 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
+import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
+import com.br.walmart.bestroute.objects.dto.PathDTO;
 import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
 import com.br.walmart.bestroute.objects.hibernate.Path;
 import com.br.walmart.bestroute.start.BestRouteApplication;
@@ -52,6 +54,28 @@ public class BestRouteApplicationTests {
     		statusCode(HttpStatus.SC_OK).
     	when().
     		get("/rest/getMap");
+	}
+	
+	@Test
+	public void setMapTest() {
+		CitiesMapDTO map = new CitiesMapDTO();
+		
+		map.setName("RJ");
+		
+		PathDTO pathDTO = new PathDTO();
+		
+		pathDTO.setStart("Q");
+		pathDTO.setEnd("P");
+		pathDTO.setDistance(20);
+		
+		map.addPath(pathDTO);
+		
+		given().
+			parameters("map", map).
+    	expect().
+    		statusCode(HttpStatus.SC_OK).
+    	when().
+    		post("/rest/setMap");
 	}
 
 	@Test

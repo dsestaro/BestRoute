@@ -3,6 +3,7 @@ package com.br.walmart.bestroute.objects.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
@@ -48,11 +49,25 @@ public class PathDAOImpl implements PathDAO {
 
 			// Atualiza a distancia com a nova distancia informada
 			pathReturn.setDistance(path.getDistance());
-
+			
+			session.close();
+			
 			return pathReturn;
 		}
+		
+		session.close();
 
 		return path;
 	}
-
+	
+	@Override
+	public void saveOrUpdate(Path path) {
+		Session session = hibernateUtils.getSession();
+		
+		session.beginTransaction();
+		
+		session.saveOrUpdate(path);
+		
+		session.close();
+	}
 }

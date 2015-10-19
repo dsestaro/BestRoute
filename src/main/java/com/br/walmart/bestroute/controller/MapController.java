@@ -1,5 +1,7 @@
 package com.br.walmart.bestroute.controller;
 
+import java.awt.print.Book;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,8 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
-import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
+import com.br.walmart.bestroute.objects.interfaces.PathInterface;
 import com.br.walmart.bestroute.service.MapService;
+import com.br.walmart.bestroute.utils.typeadapter.PathTypeAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @RestController
 @RequestMapping("/rest")
@@ -38,7 +43,14 @@ public class MapController {
 	 * @param map		- Mapa a ser salvo no banco de dados
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/setMap")
-	public void setMap(@RequestParam(value = "map") CitiesMapDTO map) {
+	public void setMap(@RequestParam(value = "map") String json) {
+		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+	    gsonBuilder.registerTypeAdapter(PathInterface.class, new PathTypeAdapter());
+	    Gson gson = gsonBuilder.create();
+		
+		CitiesMapDTO map = gson.fromJson(json, CitiesMapDTO.class);
+		
 		mapService.setMap(map);
 	}
 }

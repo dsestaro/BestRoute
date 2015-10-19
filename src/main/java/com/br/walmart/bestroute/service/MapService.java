@@ -1,12 +1,13 @@
 package com.br.walmart.bestroute.service;
 
-import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
+import com.br.walmart.bestroute.objects.dao.impl.PathDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
 import com.br.walmart.bestroute.objects.hibernate.Path;
+import com.br.walmart.bestroute.objects.interfaces.PathInterface;
 import com.br.walmart.bestroute.utils.DozerUtils;
 
 @Service
@@ -46,20 +47,14 @@ public class MapService {
 		CitiesMap map = DozerUtils.convertFromDTO(mapDTO);
 		
 		CitiesMapDAOImpl mapDAO = new CitiesMapDAOImpl();
+		PathDAOImpl pathDAO = new PathDAOImpl();
 		
 		mapDAO.saveOrUpdate(map);
 		
-//		
-//		 for(Path path : map.getPaths()) {
-//		
-//		 //Para a geração automatica de chave estrangeira do Hibernate
-//		 path.setMap(map);
-//		
-//		 MapService.getDatabasePath(session, path);
-//		
-//		 session.saveOrUpdate(path);
-//		 }
-//		
-//		 session.close();
+		for(PathInterface path : map.getPaths()) {
+			path = pathDAO.getDatabasePath((Path) path);
+			
+			pathDAO.saveOrUpdate((Path) path);
+		}
 	}
 }

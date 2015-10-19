@@ -14,4 +14,11 @@ public interface PathDAO {
 	 * @return			- Trajeto com as informações atualizadas
 	 */
 	public Path getDatabasePath(Path path);
+	
+	/**
+	 * Salva ou atualiza o trajeto no banco de dados
+	 * 
+	 * @param map		- Trajeto a ser inserido no banco de dados
+	 */
+	public void saveOrUpdate(Path path);
 }

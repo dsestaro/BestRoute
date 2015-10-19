@@ -49,6 +49,8 @@ public class CitiesMapDAOImpl implements CitiesMapDAO {
 		session.beginTransaction();
 		
 		session.saveOrUpdate(map);
+		
+		session.close();
 	}
 }
 
