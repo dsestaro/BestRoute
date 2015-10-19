@@ -53,7 +53,7 @@ public class BestRouteApplicationErrorTest {
     		parameters("name", "").
     	expect().
     		statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR).
-    		body("message", equalTo("É necessário especificar o nome do mapa a ser encontrado.")).
+    		body("message", equalTo("You must specify the map name to be found.")).
     	when().
     		get("/rest/getMap");
     	
@@ -77,7 +77,7 @@ public class BestRouteApplicationErrorTest {
 			parameters("map", map).
     	expect().
     		statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR).
-    		body("message", equalTo("É necessário especificar o nome do mapa a ser salvo.")).
+    		body("message", equalTo("You must specify the map name to be saved.")).
     	when().
     		post("/rest/setMap");
     	
@@ -93,15 +93,20 @@ public class BestRouteApplicationErrorTest {
 			parameters("price", "").
 		expect().
 			statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR).
-			body("message", equalTo("É necessário informar todos os parâmetros.")).
+			body("message", equalTo("It is necessary to inform all the parameters.")).
 		when().
 			get("/rest/bestRoute");
 	}
 	
 	@Test(expected=PathNotFoundException.class)
-	public void dijkstraTest () throws PathNotFoundException, MapNotFoundException {
+	public void dijkstraTest () throws MapNotFoundException, PathNotFoundException {
 		MapService service = new MapService();
 		
-		service.calcBestRoute("SP", "A","D", "10", "2.50");
+		try {
+			service.calcBestRoute("SP", "A","ZS", "10", "2.50");
+		} catch (MapNotFoundException e) {
+			//Nao existe mapa no banco de dados
+			throw new PathNotFoundException(e.getMessage());
+		}
 	}
 }

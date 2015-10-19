@@ -83,7 +83,7 @@ public class MapService {
 		CitiesMapDTO map = getMap(name);
 		
 		if(map == null) {
-			throw new MapNotFoundException("Mapa não existe na base de dados");
+			throw new MapNotFoundException("Map does not exist in the database.");
 		}
 		
 		BestRoute bestRoute = new BestRoute();

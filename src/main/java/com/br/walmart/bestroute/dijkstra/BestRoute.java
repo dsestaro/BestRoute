@@ -94,11 +94,11 @@ public class BestRoute {
 	 */
 	private void validatePath(String start, String end, Map<String, Vertex> nodesMap) throws PathNotFoundException {
 		if(!nodesMap.containsKey(start)) {
-			throw new PathNotFoundException("Não existem caminhos entre os pontos " + start + " e " + end + ".");
+			throw new PathNotFoundException("There are no paths between points " + start + " and " + end + ".");
 		}
 		
 		if(!nodesMap.containsKey(end)) {
-			throw new PathNotFoundException("Não existem caminhos entre os pontos " + start + " e " + end + ".");
+			throw new PathNotFoundException("There are no paths between points " + start + " and " + end + ".");
 		}
 	}
 

@@ -1,7 +1,6 @@
 package com.br.walmart.bestroute.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +39,7 @@ public class MapController {
 	@RequestMapping(method = RequestMethod.GET, value = "/getMap")
 	public @ResponseBody CitiesMapDTO getMap(@RequestParam(value = "name") String name) {
 		if (name == null || name.isEmpty()) {
-			throw new IllegalArgumentException("É necessário especificar o nome do mapa a ser encontrado.");
+			throw new IllegalArgumentException("You must specify the map name to be found.");
 		}
 
 		return mapService.getMap(name);
@@ -56,7 +55,7 @@ public class MapController {
 	public void setMap(@RequestParam(value = "map") String json) {
 
 		if (json == null || json.isEmpty()) {
-			throw new IllegalArgumentException("É necessário especificar o mapa a ser salvo.");
+			throw new IllegalArgumentException("You must specify the map to be saved.");
 		}
 
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -66,7 +65,7 @@ public class MapController {
 		CitiesMapDTO map = gson.fromJson(json, CitiesMapDTO.class);
 
 		if (map.getName() == null || map.getName().isEmpty()) {
-			throw new IllegalArgumentException("É necessário especificar o nome do mapa a ser salvo.");
+			throw new IllegalArgumentException("You must specify the map name to be saved.");
 		}
 
 		mapService.setMap(map);
@@ -93,7 +92,7 @@ public class MapController {
 
 		if (name == null || name.isEmpty() || start == null || start.isEmpty() || end == null || end.isEmpty()
 				|| autonomy == null || autonomy.isEmpty() || price == null || price.isEmpty()) {
-			throw new IllegalArgumentException("É necessário informar todos os parâmetros.");
+			throw new IllegalArgumentException("It is necessary to inform all the parameters.");
 		}
 
 		return mapService.calcBestRoute(name, start, end, autonomy, price);
