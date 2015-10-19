@@ -53,8 +53,6 @@ public class BestRouteApplicationTests {
 	}
 	
 	@Test
-	@Transactional
-	@Rollback(true)
 	public void getMapTest() {
 		given().
     		parameters("name", "SP").
@@ -65,8 +63,6 @@ public class BestRouteApplicationTests {
 	}
 	
 	@Test
-	@Transactional
-	@Rollback(true)
 	public void setMapTest() {
 		CitiesMapDTO map = new CitiesMapDTO();
 		
@@ -89,8 +85,6 @@ public class BestRouteApplicationTests {
 	}
 
 	@Test
-	@Transactional
-	@Rollback(true)
 	public void findMapTest () {
 		CitiesMapDAOImpl dao = new CitiesMapDAOImpl(this.hibernateUtils);
 		
@@ -104,8 +98,6 @@ public class BestRouteApplicationTests {
 	}
 	
 	@Test
-	@Transactional
-	@Rollback(true)
 	public void dijkstraTest () throws PathNotFoundException, MapNotFoundException {
 		CitiesMapDTO map = new CitiesMapDTO();
 		

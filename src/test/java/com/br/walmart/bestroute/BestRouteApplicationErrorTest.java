@@ -48,8 +48,6 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test
-	@Transactional
-	@Rollback(true)
 	public void getMapTestError() {
 		given().
     		parameters("name", "").
@@ -62,8 +60,6 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test	
-	@Transactional
-	@Rollback(true)
 	public void setMapTestError() {
 		CitiesMapDTO map = new CitiesMapDTO();
 		
@@ -88,8 +84,6 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test
-	@Transactional
-	@Rollback(true)
 	public void bestRouteTest () {
 		given().
 			parameters("name", "").
@@ -105,8 +99,6 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test(expected=PathNotFoundException.class)
-	@Transactional
-	@Rollback(true)
 	public void dijkstraTest () throws PathNotFoundException, MapNotFoundException {
 		MapService service = new MapService();
 		

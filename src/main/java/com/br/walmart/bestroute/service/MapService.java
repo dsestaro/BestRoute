@@ -17,7 +17,6 @@ import com.br.walmart.bestroute.utils.BestRouteUtils;
 import com.br.walmart.bestroute.utils.DozerUtils;
 
 @Service
-@Transactional
 public class MapService {
 	
 	/**
