@@ -90,7 +90,7 @@ Custo de 1L de gasolina
 
 #### Como executar o projeto ####
 
-##### Para a execução e compilação do projeto é necessário o framework Maven instalado. #####
+##### Para a execução e compilação do projeto é necessário o framework [Maven] instalado. #####
 
 para realizar a execução do projeto deve-se executar os seguintes comandos na ordem aprensetada:
 
@@ -118,3 +118,4 @@ Após rodar o comando apresentado acima o sistema já se encontra disponível pa
 [Dozer]: <http://dozer.sourceforge.net/>
 [Gson]: <https://github.com/google/gson>
 [Dijkstra]: <http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html>
+[Maven]: <https://maven.apache.org/>
