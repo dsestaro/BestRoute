@@ -22,10 +22,15 @@ public class Dijkstra {
 	private Map<Vertex, Double> distance;
 
 	public Dijkstra(Graph graph) {
-		// create a copy of the array so that we can operate on this array
+		// Instancia para evitar nullpointer
 		this.edges = new ArrayList<Edge>(graph.getEdges());
 	}
 
+	/**
+	 * Metodo principal que realiza o cálculo das distancia de um determinado ponto
+	 * 
+	 * @param source		- Vertice de origem
+	 */
 	public void execute(Vertex source) {
 		settledNodes = new HashSet<Vertex>();
 		unSettledNodes = new HashSet<Vertex>();
@@ -33,16 +38,32 @@ public class Dijkstra {
 		predecessors = new HashMap<Vertex, Vertex>();
 		distance.put(source, 0.0);
 		unSettledNodes.add(source);
+		
+		//Verifica se ainda existem vertices a ser verificados
 		while (unSettledNodes.size() > 0) {
+			//Obtem o vertice mais proxumo
 			Vertex node = getMinimum(unSettledNodes);
+			
+			//Adiciona aos vertices verificados
 			settledNodes.add(node);
+			
+			//Remove o vertice dos nao verificados
 			unSettledNodes.remove(node);
+			
+			//Calcula a distancia minima
 			findMinimalDistances(node);
 		}
 	}
 
+	/**
+	 * Calcula a distancia minima
+	 * 
+	 * @param node		- Vertice que se deseja calcula a distancia
+	 */
 	private void findMinimalDistances(Vertex node) {
+		//Obtem os vertices vizinhos
 		List<Vertex> adjacentNodes = getNeighbors(node);
+		
 		for (Vertex target : adjacentNodes) {
 			if (getShortestDistance(target) > getShortestDistance(node) + getDistance(node, target)) {
 				distance.put(target, getShortestDistance(node) + getDistance(node, target));
@@ -50,18 +71,31 @@ public class Dijkstra {
 				unSettledNodes.add(target);
 			}
 		}
-
 	}
 
+	/**
+	 * Calcula a distancia entre dois vertices
+	 * 
+	 * @param node			- Vertice de origem
+	 * @param target		- Vertice de destino
+	 * @return
+	 */
 	private double getDistance(Vertex node, Vertex target) {
 		for (Edge edge : edges) {
 			if (edge.getSource().equals(node) && edge.getDestination().equals(target)) {
 				return edge.getWeight();
 			}
 		}
-		throw new RuntimeException("Should not happen");
+		
+		throw new RuntimeException("Erro no processamento do algoritmo Dijkstra.");
 	}
 
+	/**
+	 * Obtem os vertices adjacentes ao vertice de origem.
+	 * 
+	 * @param node			- Vertice de origem
+	 * @return
+	 */
 	private List<Vertex> getNeighbors(Vertex node) {
 		List<Vertex> neighbors = new ArrayList<Vertex>();
 		for (Edge edge : edges) {
@@ -72,6 +106,12 @@ public class Dijkstra {
 		return neighbors;
 	}
 
+	/**
+	 * Obtem o vertice mais proximo do ponto de origem.
+	 * 
+	 * @param vertexes		- Lista de vertices que se deve calcula a distancia
+	 * @return				- Vertice mais proximo
+	 */
 	private Vertex getMinimum(Set<Vertex> vertexes) {
 		Vertex minimum = null;
 		for (Vertex vertex : vertexes) {
@@ -90,6 +130,12 @@ public class Dijkstra {
 		return settledNodes.contains(vertex);
 	}
 
+	/**
+	 * Obtem a distancia do map de distancias
+	 * 
+	 * @param destination		- Destino que se quer calcular
+	 * @return
+	 */
 	private double getShortestDistance(Vertex destination) {
 		Double d = distance.get(destination);
 		if (d == null) {
@@ -99,9 +145,11 @@ public class Dijkstra {
 		}
 	}
 
-	/*
-	 * This method returns the path from the source to the selected target and
-	 * NULL if no path exists
+	/**
+	 * Calcula o caminho entro o ponto de origem e o de destino.
+	 * 
+	 * @param target		- Vertice de destino
+	 * @return				- Caminho obtido ou null caso não exista
 	 */
 	public LinkedList<Vertex> getPath(Vertex target) {
 		LinkedList<Vertex> path = new LinkedList<Vertex>();
@@ -109,7 +157,7 @@ public class Dijkstra {
 		
 		target.setDistancia(0);
 		
-		// check if a path exists
+		// verifica se o caminho existe
 		if (predecessors.get(step) == null) {
 			return null;
 		}
@@ -120,9 +168,11 @@ public class Dijkstra {
 			step = predecessors.get(step);
 			path.add(step);
 		}
-		// Put it into the correct order
+		
+		//Coloca os vertices na ordem correta
 		Collections.reverse(path);
 		
+		//Obtem as distancias do mapa de distancia
 		for(Vertex vertex : path) {
 			vertex.setDistancia(this.distance.get(vertex));
 		}

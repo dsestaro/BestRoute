@@ -10,18 +10,38 @@ public class Vertex {
 		this.name = name;
 	}
 
+	/**
+	 * Obtem o ID do vertice
+	 * 
+	 * @return
+	 */
 	public String getId() {
 		return id;
 	}
-
+	
+	/**
+	 * Obtem o nome do vertice
+	 * 
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Obtem a distancia do vertice ao ponto de origem
+	 * 
+	 * @return
+	 */
 	public double getDistancia() {
 		return distancia;
 	}
 
+	/**
+	 * Adicona a distancia do vertice ao ponto de origem
+	 * 
+	 * @param distancia
+	 */
 	public void setDistancia(double distancia) {
 		this.distancia = distancia;
 	}

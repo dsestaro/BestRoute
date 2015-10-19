@@ -11,10 +11,20 @@ public class Graph {
 		this.edges = edges;
 	}
 
+	/**
+	 * Obtem os vertices do grafo
+	 * 
+	 * @return
+	 */
 	public List<Vertex> getVertexes() {
 		return vertexes;
 	}
 
+	/**
+	 * Obtem as arestas do grafo
+	 * 
+	 * @return
+	 */
 	public List<Edge> getEdges() {
 		return edges;
 	}

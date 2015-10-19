@@ -12,25 +12,45 @@ public class Edge {
 		this.destination = destination;
 		this.weight = distance;
 	}
-
+	
+	/**
+	 * Obtem o ID da aresta
+	 * 
+	 * @return
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * Obtem o vertice de destino
+	 * 
+	 * @return
+	 */
 	public Vertex getDestination() {
 		return destination;
 	}
 
+	/**
+	 * Obtem o vertice de origem
+	 * 
+	 * @return
+	 */
 	public Vertex getSource() {
 		return source;
 	}
 
+	/**
+	 * Obtem a distancia do ponto de origem ate o de destino
+	 * 
+	 * @return
+	 */
 	public double getWeight() {
 		return weight;
 	}
 
 	@Override
 	public String toString() {
-		return source + " " + destination;
+		return source + " " + destination + " " + weight;
 	}
 }
