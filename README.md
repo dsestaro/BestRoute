@@ -18,6 +18,7 @@ Com os mapas carregados o requisitante irá procurar o menor valor de entrega e 
 ##### Restrições: #####
 - Só pode existir uma única rota de A para B, para o mapa X. Caso essa rota seja informada mais de uma vez o valor da distância será atualizado.
 - Os mapas são persistidos em banco de dados e transacionados, portanto não é possível a execução de duas aplicações simultâneamente.
+- Todos os caminhos são unidirecionais, ou seja, A B 10 é diferente de B A 10.
 
 #### Tecnologias Utilizadas ####
 - [Hibernate]
@@ -65,7 +66,7 @@ public class Path {
 ###### Exemplo de chamada: 
 
 ```sh
-/rest/getMap?name=SP
+/rest/setMap?name=SP
 ```
 
 [Hibernate]: <http://hibernate.org/>
