@@ -1,6 +1,8 @@
 package com.br.walmart.bestroute;
 
-import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.*;
+import static com.jayway.restassured.matcher.RestAssuredMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
 import org.apache.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +33,7 @@ import com.jayway.restassured.RestAssured;
 @SpringApplicationConfiguration(classes = BestRouteApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
-public class BestRouteApplicationTests {
+public class BestRouteApplicationErrorTest {
 
 	@Value("${local.server.port}")
 	private int port;
@@ -47,20 +50,22 @@ public class BestRouteApplicationTests {
 	}
 	
 	@Test
-	public void getMapTest() {
+	public void getMapTestError() {
 		given().
-    		parameters("name", "SP").
+    		parameters("name", "").
     	expect().
-    		statusCode(HttpStatus.SC_OK).
+    		statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR).
+    		body("message", equalTo("É necessário especificar o nome do mapa a ser encontrado.")).
     	when().
     		get("/rest/getMap");
+    	
 	}
 	
-	@Test
-	public void setMapTest() {
+	@Test	
+	public void setMapTestError() {
 		CitiesMapDTO map = new CitiesMapDTO();
 		
-		map.setName("RJ");
+		map.setName(null);
 		
 		PathDTO pathDTO = new PathDTO();
 		
@@ -73,26 +78,25 @@ public class BestRouteApplicationTests {
 		given().
 			parameters("map", map).
     	expect().
-    		statusCode(HttpStatus.SC_OK).
+    		statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR).
+    		body("message", equalTo("É necessário especificar o nome do mapa a ser salvo.")).
     	when().
     		post("/rest/setMap");
-	}
-
-	@Test
-	public void findMapTest () {
-		CitiesMapDAOImpl dao = new CitiesMapDAOImpl(this.hibernateUtils);
-		
-		CitiesMap map = new CitiesMap("SP");
-		map.addPath(new Path("A", "B", 10, map));
-
-		when(hibernateUtils.getSession()).thenReturn(this.session);
-		when(session.get(CitiesMap.class, "SP")).thenReturn(map);
-
-		Assert.assertEquals(dao.findMap("SP"), map);
+    	
 	}
 	
 	@Test
 	public void bestRouteTest () {
-		//TODO
+		given().
+			parameters("name", "").
+			parameters("start", "").
+			parameters("end", "").
+			parameters("autonomy", "").
+			parameters("price", "").
+		expect().
+			statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR).
+			body("message", equalTo("É necessário informar todos os parâmetros.")).
+		when().
+			get("/rest/bestRoute");
 	}
 }

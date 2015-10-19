@@ -57,4 +57,9 @@ public class MapService {
 			pathDAO.saveOrUpdate((Path) path);
 		}
 	}
+
+	public CitiesMapDTO calcBestRoute(String name, String start, String end, String autonomy, String price) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
