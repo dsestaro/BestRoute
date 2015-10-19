@@ -34,15 +34,8 @@ public class CitiesMapDAOImpl implements CitiesMapDAO {
 	public CitiesMap findMap(String name) {
 		Session session = hibernateUtils.getSession();
 		
-		//TODO remover para annotation
-		Transaction transaction = session.beginTransaction();
-		
 		//Tenta obter o mapa do banco de dados
 		CitiesMap map = (CitiesMap) session.get(CitiesMap.class, name);
-		
-		//TODO remover para annotation
-		transaction.commit();
-		session.flush();
 		
 		session.close();
 		return map;
