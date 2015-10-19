@@ -2,13 +2,17 @@ package com.br.walmart.bestroute.service;
 
 import org.springframework.stereotype.Service;
 
+import com.br.walmart.bestroute.dijkstra.BestRoute;
 import com.br.walmart.bestroute.exception.MapNotFoundException;
+import com.br.walmart.bestroute.exception.PathNotFoundException;
 import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
 import com.br.walmart.bestroute.objects.dao.impl.PathDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
+import com.br.walmart.bestroute.objects.dto.ShortestPathDTO;
 import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
 import com.br.walmart.bestroute.objects.hibernate.Path;
 import com.br.walmart.bestroute.objects.interfaces.PathInterface;
+import com.br.walmart.bestroute.utils.BestRouteUtils;
 import com.br.walmart.bestroute.utils.DozerUtils;
 
 @Service
@@ -59,7 +63,21 @@ public class MapService {
 		}
 	}
 
-	public CitiesMapDTO calcBestRoute(String name, String start, String end, String autonomy, String price) throws MapNotFoundException {
+	/**
+	 * Calcula o custo da menor rota possivel no mapa informado.
+	 * 
+	 * @param name		- Nome do mapa a ser calculado
+	 * @param start		- Vertice de origem
+	 * @param end		- Vertice de destino
+	 * @param autonomy	- Autonomia do caminhao
+	 * @param price		- preco da gasolina
+	 * 
+	 * @return
+	 * @throws MapNotFoundException 	- Mapa nao existe
+	 * @throws PathNotFoundException	- Caminho nao existe
+	 */
+	public ShortestPathDTO calcBestRoute(String name, String start, String end, String autonomy, String price)
+			throws MapNotFoundException, PathNotFoundException {
 		
 		CitiesMapDTO map = getMap(name);
 		
@@ -67,8 +85,12 @@ public class MapService {
 			throw new MapNotFoundException("Mapa não existe na base de dados");
 		}
 		
+		BestRoute bestRoute = new BestRoute();
 		
+		ShortestPathDTO path = bestRoute.execute(map, start, end);
 		
-		return null;
+		path = BestRouteUtils.calculateCost(path, autonomy, price);
+		
+		return path;
 	}
 }
