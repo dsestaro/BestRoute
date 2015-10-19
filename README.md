@@ -30,6 +30,7 @@ Com os mapas carregados o requisitante irá procurar o menor valor de entrega e 
 - [REST Assured]
 - [Mockito]
 - [Dozer]
+- [Gson]
  
 #### Serviços REST ####
 ##### GET /rest/getMap #####
@@ -74,3 +75,4 @@ public class Path {
 [REST Assured]: <http://code.google.com/p/rest-assured/>
 [Mockito]: <http://mockito.org/>
 [Dozer]: <http://dozer.sourceforge.net/>
+[Gson]: <https://github.com/google/gson>
