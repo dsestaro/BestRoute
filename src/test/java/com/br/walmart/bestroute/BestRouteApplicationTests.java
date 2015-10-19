@@ -14,8 +14,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.br.walmart.bestroute.dijkstra.BestRoute;
 import com.br.walmart.bestroute.exception.MapNotFoundException;
@@ -51,6 +53,8 @@ public class BestRouteApplicationTests {
 	}
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void getMapTest() {
 		given().
     		parameters("name", "SP").
@@ -61,6 +65,8 @@ public class BestRouteApplicationTests {
 	}
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void setMapTest() {
 		CitiesMapDTO map = new CitiesMapDTO();
 		
@@ -83,6 +89,8 @@ public class BestRouteApplicationTests {
 	}
 
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void findMapTest () {
 		CitiesMapDAOImpl dao = new CitiesMapDAOImpl(this.hibernateUtils);
 		
@@ -96,9 +104,22 @@ public class BestRouteApplicationTests {
 	}
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void dijkstraTest () throws PathNotFoundException, MapNotFoundException {
-		MapService service = new MapService();
+		CitiesMapDTO map = new CitiesMapDTO();
 		
-		service.calcBestRoute("SP", "A","D", "10", "2.50");
+		map.setName("SP");
+		
+		map.addPath(new PathDTO("A", "B", 10));
+		map.addPath(new PathDTO("B", "D", 15));
+		map.addPath(new PathDTO("A", "C", 20));
+		map.addPath(new PathDTO("C", "D", 30));
+		map.addPath(new PathDTO("B", "E", 50));
+		map.addPath(new PathDTO("D", "E", 30));
+		
+		BestRoute service = new BestRoute();
+		
+		Assert.assertEquals(service.execute(map, "A","D").getCost(), 25.0, 0);
 	}
 }

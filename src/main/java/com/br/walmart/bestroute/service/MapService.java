@@ -1,6 +1,7 @@
 package com.br.walmart.bestroute.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.br.walmart.bestroute.dijkstra.BestRoute;
 import com.br.walmart.bestroute.exception.MapNotFoundException;
@@ -16,6 +17,7 @@ import com.br.walmart.bestroute.utils.BestRouteUtils;
 import com.br.walmart.bestroute.utils.DozerUtils;
 
 @Service
+@Transactional
 public class MapService {
 	
 	/**

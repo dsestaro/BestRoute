@@ -54,8 +54,7 @@ public class PathDAOImpl implements PathDAO {
 			
 			return pathReturn;
 		}
-		session.flush();
-		
+
 		session.close();
 
 		return path;
@@ -65,12 +64,7 @@ public class PathDAOImpl implements PathDAO {
 	public void saveOrUpdate(Path path) {
 		Session session = hibernateUtils.getSession();
 		
-		Transaction transaction = session.beginTransaction();
-		
 		session.saveOrUpdate(path);
-		
-		transaction.commit();
-		session.flush();
 		
 		session.close();
 	}

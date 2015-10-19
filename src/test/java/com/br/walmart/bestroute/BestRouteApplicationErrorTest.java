@@ -1,33 +1,27 @@
 package com.br.walmart.bestroute;
 
-import static com.jayway.restassured.RestAssured.*;
-import static com.jayway.restassured.matcher.RestAssuredMatchers.*;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.when;
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 import org.apache.http.HttpStatus;
 import org.hibernate.Session;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.br.walmart.bestroute.dijkstra.BestRoute;
 import com.br.walmart.bestroute.exception.MapNotFoundException;
 import com.br.walmart.bestroute.exception.PathNotFoundException;
-import com.br.walmart.bestroute.objects.dao.impl.CitiesMapDAOImpl;
 import com.br.walmart.bestroute.objects.dto.CitiesMapDTO;
 import com.br.walmart.bestroute.objects.dto.PathDTO;
-import com.br.walmart.bestroute.objects.hibernate.CitiesMap;
-import com.br.walmart.bestroute.objects.hibernate.Path;
 import com.br.walmart.bestroute.service.MapService;
 import com.br.walmart.bestroute.start.BestRouteApplication;
 import com.br.walmart.bestroute.utils.HibernateUtils;
@@ -54,6 +48,8 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void getMapTestError() {
 		given().
     		parameters("name", "").
@@ -66,6 +62,8 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test	
+	@Transactional
+	@Rollback(true)
 	public void setMapTestError() {
 		CitiesMapDTO map = new CitiesMapDTO();
 		
@@ -90,6 +88,8 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void bestRouteTest () {
 		given().
 			parameters("name", "").
@@ -105,6 +105,8 @@ public class BestRouteApplicationErrorTest {
 	}
 	
 	@Test(expected=PathNotFoundException.class)
+	@Transactional
+	@Rollback(true)
 	public void dijkstraTest () throws PathNotFoundException, MapNotFoundException {
 		MapService service = new MapService();
 		
